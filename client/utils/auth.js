@@ -16,4 +16,4 @@ export const authorise = (token) => {
 export const createSignature = (task) => {
     let requestString = `status=${task.status}&text=${encodeURI(task.text)}&token=${SERVER_TOKEN}`;
     return md5(requestString);
-}
+};

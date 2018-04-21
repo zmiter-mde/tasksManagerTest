@@ -7,7 +7,7 @@ import { tasksReducer } from './reducers/tasks';
 import { taskSearchReducer } from './reducers/taskSearch';
 import { imageReducer } from './reducers/image';
 
-import { initialTaskFormState, initialLoginFormState } from './utils/initialState';
+import { initialTaskFormState, initialLoginFormState } from './utils/formInitialStates';
 
 const rootReducer = combineForms({
     newTaskForm: initialTaskFormState,

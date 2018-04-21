@@ -9,12 +9,12 @@ import App from './App';
 
 import { store } from './createStore';
 
-import './shared/globals.scss';
+import './scss/globals.scss';
 
 render(
     <Provider store={ store }>
         <BrowserRouter>
-            <App></App>
+            <App/>
         </BrowserRouter>
     </Provider>,
     document.getElementById('root')

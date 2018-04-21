@@ -17,15 +17,25 @@ const BUILD_DIR = 'build';
 
 module.exports = {
     entry: './client/index.js',
+
     output: {
         path: path.resolve(BUILD_DIR),
         filename: 'index_bundle.js'
     },
+
     module: {
         loaders: [
-            { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-            { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
-            { test: /\.scss$/,
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.jsx$/,
+                loader: 'babel-loader', exclude: /node_modules/
+            },
+            {
+                test: /\.scss$/,
                 loaders: [
                     'style-loader',
                     'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
@@ -33,9 +43,13 @@ module.exports = {
                 ],
                 exclude: /node_modules/
             },
-            { test: /\.(ttf|otf|eot|svg|png|woff(2)?)(\?[a-z0-9]+)?$/, loader: 'url-loader?limit=10000', exclude: /node_modules/ },
+            {
+                test: /\.(ttf|otf|eot|svg|png|woff(2)?)(\?[a-z0-9]+)?$/,
+                loader: 'url-loader?limit=10000',
+                exclude: /node_modules/
+            },
 
-            /* Additional loaders */
+            /* Additional loaders for bootstrap */
             {
                 test: /\.css$/,
                 loaders: ['style-loader','css-loader']
@@ -66,6 +80,7 @@ module.exports = {
             }
         ]
     },
+
     plugins: [
         new CleanWebpackPlugin([BUILD_DIR]),
         HtmlWebpackPluginConfig,
@@ -81,6 +96,10 @@ module.exports = {
             [{
                 from: '_redirects',
                 to: '_redirects',
+                toType: 'file'
+            }, {
+                from: 'favicon.png',
+                to: 'favicon.png',
                 toType: 'file'
             }],
             { debug: 'info' }

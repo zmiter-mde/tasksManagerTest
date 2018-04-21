@@ -1,6 +1,6 @@
 import { actions } from 'react-redux-form';
 
-import { initialLoginFormState } from '../utils/initialState';
+import { initialLoginFormState } from '../utils/formInitialStates';
 
 export const login = (username, password) => (
     (dispatch) => {
