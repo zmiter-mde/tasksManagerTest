@@ -13,6 +13,7 @@
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
     "email-validator": "^2.0.3",
+    "md5": "^2.2.1",
     "path": "^0.12.7",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",

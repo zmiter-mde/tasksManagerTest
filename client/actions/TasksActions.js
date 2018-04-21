@@ -3,7 +3,8 @@ import { actions } from 'react-redux-form';
 
 import { api } from '../utils/api';
 
-import { DEVELOPER_NAME_PARAM } from '../utils/constants';
+import { DEVELOPER_NAME_PARAM, SERVER_TOKEN, STATUS, SIGNATURE, SERVER_TOKEN_FIELD, TEXT } from '../utils/constants';
+import { createSignature } from '../utils/auth';
 
 export const requestTasks = (page, sorting) => (
     (dispatch) => {
@@ -41,17 +42,17 @@ export const chooseEditTask = (task) => (
 
 export const editTask = (task) => (
     (dispatch) => {
+        let data = new FormData();
+        data.append(STATUS, task.status);
+        data.append(TEXT, task.text);
+        data.append(SERVER_TOKEN_FIELD, SERVER_TOKEN);
+        data.append(SIGNATURE, createSignature(task));
+
         return api.post(
             `/edit/${task.id}?${DEVELOPER_NAME_PARAM}`,
-            {
-                text: task.text,
-                status: task.status
-            },
-            {
-                'Content-Type': 'application/json'
-            }
+            data
         ).then(json => {
-            dispatch({ type: actionTypes.TASKS_REQUESTED, data: json.message });
+            dispatch(actions.change('tasksReducer.tasks', []));
             return Promise.resolve(json);
         });
     }
