@@ -34,12 +34,12 @@ class TaskList extends Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-xs-12">
+                    <div className="col-xs-10 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                         <h2>Tasks</h2>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-xs-8">
+                    <div className="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                         {
                         this.props.totalTaskCount &&
                         <Pagination
@@ -49,15 +49,13 @@ class TaskList extends Component {
                             pageRangeDisplayed={this.getPagesCount()}
                             onChange={this.changePage.bind(this)} />
                         }
-                    </div>
-                    <div className="col-xs-4">
                         <div className="right">
                             <Link className={classNames('btn btn-success', styles.marginedTop)} to="/new">Create Task</Link>
                         </div>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-xs-12">
+                    <div className="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                         { this.getTasksTable(tasks) }
                     </div>
                 </div>
@@ -139,7 +137,10 @@ class TaskList extends Component {
                 <td>{task.username}</td>
                 <td>{task.email}</td>
                 <td><div className={styles.ellipsed}>{task.text}</div></td>
-                <td>{task.status === 10 ? <span className="glyphicon glyphicon-ok"></span> : ''}</td>
+                <td>
+                    <span className={classNames('glyphicon', task.status === 10 ? 'glyphicon-ok' : 'glyphicon-remove')}>
+                    </span>
+                </td>
             </tr>
         );
     }

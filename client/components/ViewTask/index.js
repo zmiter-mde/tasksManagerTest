@@ -9,12 +9,13 @@ class ViewTask extends Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-xs-12 col-md-12 col-lg-12 form-group">
+                    <div className="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-group">
+                        <h2>Task Preview</h2>
                         <Link className="btn btn-primary right" to="/new">Back to Creation</Link>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                    <div className="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                         <div className="panel panel-primary">
                             <div className="panel-heading">
                                 <h3 className="panel-title">Task Overview</h3>

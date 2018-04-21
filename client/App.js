@@ -7,6 +7,7 @@ import TaskList from './components/TaskList';
 import CreateTask from './components/CreateTask';
 import ViewTask from './components/ViewTask';
 import EditTask from './components/EditTask';
+import Login from './components/Login';
 
 class App extends Component {
 
@@ -17,8 +18,8 @@ class App extends Component {
                 <Switch>
                     <Route exact path={'/'} render={() => (<Redirect to="/dashboard"/>)} />
                     <Route exact path={'/dashboard'} component={TaskList} />
+                    <Route exact path={'/login'} component={Login} />
                     <Route exact path={'/new'} component={CreateTask} />
-                    <Route exact path={'/:id'} component={ViewTask} />
                     <Route exact path={'/preview'} component={ViewTask} />
                     <Route exact path={'/:id/edit'} component={EditTask} />
                 </Switch>

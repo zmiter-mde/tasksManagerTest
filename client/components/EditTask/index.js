@@ -5,15 +5,24 @@ import { Form, Control, Errors } from 'react-redux-form';
 import {toastr} from 'react-redux-toastr';
 import classNames from 'classnames';
 
-import { isEmail, isRequired } from '../../utils/validators';
+import { isRequired } from '../../utils/validators';
 
 import { editTask, setNewTaskStatus } from '../../actions/TasksActions';
+import { isAuthorised } from '../../utils/auth';
 
 class EditTask extends Component {
 
     render() {
         return (
             <div className="container-fluid">
+                <div className="row">
+                    <div className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                        <h2>Manage task</h2>
+                        <h5 className={classNames({'hidden': isAuthorised()})}>
+                            You need to authorise in order to manage tasks
+                        </h5>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                         <Form model="editTaskForm" onSubmit={(val) => this.editTask(val)}>
@@ -44,19 +53,23 @@ class EditTask extends Component {
                                                   className="form-control"
                                                   validators={{
                                                       isRequired: isRequired
-                                                  }}/>
+                                                  }}
+                                                  disabled={!isAuthorised()}/>
                             </div>
 
                             <div className="form-group">
                                 <label>Status</label>
                                 <span className={classNames('glyphicon margined-left',
                                     this.props.editTaskForm.status === 10 ? 'glyphicon-ok' : 'glyphicon-remove')}></span>
-                                <button className={classNames('btn btn-danger margined-left', {'hidden': this.props.editTaskForm.status === 0})}
+                                <button className={classNames('btn btn-danger margined-left', {
+                                    'hidden': this.props.editTaskForm.status === 0 || !isAuthorised()
+                                })}
                                         onClick={this.toggleCurrentTaskStatus.bind(this)}
                                         type="button">
                                     Resume Task
                                 </button>
-                                <button className={classNames('btn btn-success margined-left', {'hidden': this.props.editTaskForm.status === 10})}
+                                <button className={classNames('btn btn-success margined-left', {
+                                    'hidden': this.props.editTaskForm.status === 10 || !isAuthorised()})}
                                         onClick={this.toggleCurrentTaskStatus.bind(this)}
                                         type="button">
                                     Finish Task
@@ -71,7 +84,7 @@ class EditTask extends Component {
                                 <Control.button type="submit"
                                                 className="btn btn-success right margined-left"
                                                 model="editTaskForm"
-                                                disabled={{valid: false}}>
+                                                disabled={(form) => !isAuthorised() || !form.valid}>
                                     Save
                                 </Control.button>
                             </div>

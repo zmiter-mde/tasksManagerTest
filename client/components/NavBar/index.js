@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
+import classNames from 'classnames';
+
+import { isAuthorised, logout } from '../../utils/auth';
+
 class NavBar extends Component {
 
     render() {
@@ -12,11 +16,17 @@ class NavBar extends Component {
                     </div>
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
-                            <li className={this.getActiveLinkClass('/new')}>
+                            <li className={classNames({'active': this.isActivePath('/new')})}>
                                 <Link to="/new">Manage Task</Link>
                             </li>
-                            <li className={this.getActiveLinkClass('/login')}>
+                            <li className={classNames({'active': this.isActivePath('/login'), 'hidden': this.isAuthorised()})}>
                                 <Link to="/login">Login</Link>
+                            </li>
+                            <li className={classNames({'hidden': !this.isAuthorised()})}>
+                                <Link to="/dashboard"
+                                      onClick={this.logout.bind(this)}>
+                                    Logout
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -25,9 +35,18 @@ class NavBar extends Component {
         );
     }
 
-    getActiveLinkClass(path) {
-        return this.props.location.pathname === path ? 'active' : '';
+    isActivePath(path) {
+        return this.props.location.pathname === path;
     }
+
+    isAuthorised() {
+        return isAuthorised();
+    }
+
+    logout() {
+        logout();
+    }
+
 }
 
 export default withRouter(NavBar);

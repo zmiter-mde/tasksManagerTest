@@ -21,6 +21,11 @@ class CreateTask extends Component {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                        <h2>Create Task</h2>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                         <Form model="newTaskForm" onSubmit={(val) => this.createTask(val)}>
                             <div className="form-group">
                                 <label>Username</label>
@@ -76,7 +81,7 @@ class CreateTask extends Component {
                                 <Control.button type="submit"
                                                 className="btn btn-success right margined-left"
                                                 model="newTaskForm"
-                                                disabled={(form) => !this.props.newImage.file || !form.valid }>
+                                                disabled={(form) => !this.props.newImage.file || !form.valid}>
                                     Save
                                 </Control.button>
                                 <button type="button"

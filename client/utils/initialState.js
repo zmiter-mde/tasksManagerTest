@@ -7,3 +7,8 @@ export const initialTaskFormState = {
     file: undefined,
     path: ''
 };
+
+export const initialLoginFormState = {
+    username: '',
+    password: ''
+}

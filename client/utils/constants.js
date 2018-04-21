@@ -5,3 +5,4 @@ export const EMAIL = 'email';
 export const STATUS = 'status';
 export const IMAGE = 'image';
 export const TEXT = 'text';
+export const TOKEN = 'token';

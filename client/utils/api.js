@@ -1,3 +1,5 @@
+import { TOKEN } from './constants';
+
 export const CONTEXT = process.env.AUTH_API;
 
 const checkStatus = (response) => {
@@ -8,7 +10,6 @@ const checkStatus = (response) => {
         error.response = response;
 
         if(response.status === 401 && (!response.url.includes('login'))) {
-            //store.dispatch(requestLogout());
         }
         throw error;
     }
@@ -25,11 +26,6 @@ const getHeaders = () => {
     */
     return headers;
 };
-
-/*eslint-disable no-undef*/
-const getToken = () => (
-    localStorage.getItem('token')
-);
 
 export const api = {
     'get': (url, additionalHeaders) => {
