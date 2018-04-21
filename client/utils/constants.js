@@ -9,3 +9,5 @@ export const TEXT = 'text';
 export const AUTH_TOKEN = 'token';
 export const SERVER_TOKEN_FIELD = 'token';
 export const SIGNATURE = 'signature';
+export const MAX_IMAGE_WIDTH = 320;
+export const MAX_IMAGE_HEIGHT = 240;

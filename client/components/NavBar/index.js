@@ -17,7 +17,7 @@ class NavBar extends Component {
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
                             <li className={classNames({'active': this.isActivePath('/new')})}>
-                                <Link to="/new">Manage Task</Link>
+                                <Link to="/new">Create Task</Link>
                             </li>
                             <li className={classNames({'active': this.isActivePath('/login'), 'hidden': isAuthorised()})}>
                                 <Link to="/login">Login</Link>
