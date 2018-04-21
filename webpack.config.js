@@ -34,7 +34,7 @@ module.exports = {
         exclude: /node_modules/
       },
       { test: /\.(ttf|otf|eot|svg|png|woff(2)?)(\?[a-z0-9]+)?$/, loader: 'url-loader?limit=10000', exclude: /node_modules/ },
-
+        /* Additional loaders */
         {
             test: /\.css$/,
             loaders: ['style-loader','css-loader']
