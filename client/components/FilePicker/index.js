@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import classNames from 'classnames';
 
+import { MAX_IMAGE_HEIGHT, MAX_IMAGE_WIDTH } from '../../utils/constants';
+
 class FilePicker extends Component {
 
     filePicker = undefined;
@@ -11,14 +13,14 @@ class FilePicker extends Component {
         super(props);
         this.state = {
             file: undefined,
-            path: ''
+            path: undefined
         };
     }
 
     componentDidMount() {
         const { newImage } = this.props;
         // Otherwise file picker is reset on page reenter
-        this.setState({file: newImage.file, path: newImage.path});
+        this.setState({file: newImage.file});
     }
 
     render() {
@@ -39,6 +41,7 @@ class FilePicker extends Component {
                 <input id="image"
                        name="image"
                        type="file"
+                       accept="image/jpg,image/png,image/gif"
                        onChange={this.handleImageChange.bind(this)}
                        ref={instance => { this.filePicker = instance; }}
                        className="hidden"
@@ -56,15 +59,66 @@ class FilePicker extends Component {
         let file = e.target.files[0];
         let reader = new FileReader();
 
-        reader.onloadend = () => {
-            this.setState({
-                file: file,
-                path: reader.result
-            });
-            this.props.handleImageChange(file, reader.result);
-        };
+        reader.onloadend = this.handleImageLoad;
 
         reader.readAsDataURL(file);
+    }
+
+    handleImageLoad = (e) => {
+        let img = new Image();
+        img.onload = () => {
+            let imageDataUrl = this.resizeImage(img);
+            let resizedImage = this.imageDataUrlToImage(imageDataUrl);
+            this.setState({file: resizedImage, path: imageDataUrl});
+            this.props.handleImageChange(resizedImage, imageDataUrl);
+        };
+        img.src = e.target.result;
+    };
+
+    imageDataUrlToImage(imageDataUrl) {
+        let blobBin = atob(imageDataUrl.split(',')[1]);
+        let array = [];
+        for(let i = 0; i < blobBin.length; i++) {
+            array.push(blobBin.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: 'image/png'});
+    }
+
+    resizeImage(image) {
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0);
+
+        let newSize = this.getNewSize(image);
+
+        canvas.width = newSize.width;
+        canvas.height = newSize.height;
+        canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0, newSize.width, newSize.height);
+
+        return canvas.toDataURL("image/png");
+    }
+
+    getNewSize(image) {
+        let width = image.width;
+        let height = image.height;
+
+        if (width > height) {
+            if (width > MAX_IMAGE_WIDTH) {
+                height *= MAX_IMAGE_WIDTH / width;
+                width = MAX_IMAGE_WIDTH;
+            }
+        } else {
+            if (height > MAX_IMAGE_HEIGHT) {
+                width *= MAX_IMAGE_HEIGHT / height;
+                height = MAX_IMAGE_HEIGHT;
+            }
+        }
+
+        return {
+            width: width,
+            height: height
+        };
     }
 }
 

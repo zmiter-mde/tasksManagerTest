@@ -96,8 +96,8 @@ class CreateTask extends Component {
         );
     }
 
-    handleFileChange(file) {
-        this.props.changeImage({file: file});
+    handleFileChange(file, path) {
+        this.props.changeImage({file: file, path: path});
     }
 
     createTask(values) {
@@ -122,7 +122,7 @@ class CreateTask extends Component {
         this.props.setTaskToView({
             ...this.props.newTaskForm,
             status: 0,
-            image_path: this.props.newImage.file
+            image_path: this.props.newImage.path
         });
         this.props.history.push('/preview');
     }
