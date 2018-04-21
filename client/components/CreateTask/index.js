@@ -80,7 +80,9 @@ class CreateTask extends Component {
                                 <Control.button type="submit"
                                                 className="btn btn-success right margined-left"
                                                 model="newTaskForm"
-                                                disabled={(form) => !this.props.newImage.file || !form.valid}>
+                                                disabled={(form) => !this.props.newImage.file ||
+                                                                    !this.props.newImage.typeAccepted ||
+                                                                    !form.valid}>
                                     Save
                                 </Control.button>
                                 <button type="button"
@@ -96,8 +98,8 @@ class CreateTask extends Component {
         );
     }
 
-    handleFileChange(file, path) {
-        this.props.changeImage({file: file, path: path});
+    handleFileChange(file, path, typeAccepted) {
+        this.props.changeImage({file: file, path: path, typeAccepted: typeAccepted});
     }
 
     createTask(values) {

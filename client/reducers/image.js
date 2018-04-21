@@ -3,7 +3,9 @@ import * as actionTypes from '../actions/actionTypes';
 export const imageReducer = (
     state = {
         newImage: {
-            file: undefined
+            file: undefined,
+            path: undefined,
+            typeAccepted: false
         }
     },
     action = {}

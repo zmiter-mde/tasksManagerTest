@@ -13,7 +13,8 @@ class FilePicker extends Component {
         super(props);
         this.state = {
             file: undefined,
-            path: undefined
+            path: undefined,
+            typeAccepted: false
         };
     }
 
@@ -41,7 +42,6 @@ class FilePicker extends Component {
                 <input id="image"
                        name="image"
                        type="file"
-                       accept="image/jpg,image/png,image/gif"
                        onChange={this.handleImageChange.bind(this)}
                        ref={instance => { this.filePicker = instance; }}
                        className="hidden"
@@ -56,12 +56,27 @@ class FilePicker extends Component {
     }
 
     handleImageChange(e) {
-        let file = e.target.files[0];
-        let reader = new FileReader();
+        let newFile = e.target.files[0];
+        this.setState({
+            type: newFile.type,
+            typeAccepted: this.isTypeAccepted(newFile.type)
+        }, () => {
+            const { typeAccepted, path, file } = this.state;
+            if (!typeAccepted) {
+                this.props.handleImageChange(file, path, typeAccepted);
+            } else {
+                let reader = new FileReader();
 
-        reader.onloadend = this.handleImageLoad;
+                reader.onloadend = this.handleImageLoad;
 
-        reader.readAsDataURL(file);
+                reader.readAsDataURL(newFile);
+            }
+        });
+    }
+
+    isTypeAccepted(type) {
+        return type === 'image/jpg' || type === 'image/jpeg' ||
+               type === 'image/png' || type === 'image/gif';
     }
 
     handleImageLoad = (e) => {
@@ -70,7 +85,7 @@ class FilePicker extends Component {
             let imageDataUrl = this.resizeImage(img);
             let resizedImage = this.imageDataUrlToImage(imageDataUrl);
             this.setState({file: resizedImage, path: imageDataUrl});
-            this.props.handleImageChange(resizedImage, imageDataUrl);
+            this.props.handleImageChange(resizedImage, imageDataUrl, this.state.typeAccepted);
         };
         img.src = e.target.result;
     };
@@ -81,7 +96,7 @@ class FilePicker extends Component {
         for(let i = 0; i < blobBin.length; i++) {
             array.push(blobBin.charCodeAt(i));
         }
-        return new Blob([new Uint8Array(array)], {type: 'image/png'});
+        return new Blob([new Uint8Array(array)], {type: this.state.type});
     }
 
     resizeImage(image) {
@@ -96,7 +111,7 @@ class FilePicker extends Component {
         canvas.getContext("2d");
         ctx.drawImage(image, 0, 0, newSize.width, newSize.height);
 
-        return canvas.toDataURL("image/png");
+        return canvas.toDataURL(this.state.type);
     }
 
     getNewSize(image) {
