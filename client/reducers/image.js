@@ -17,5 +17,4 @@ export const imageReducer = (
         default:
             return state;
     }
-
 };

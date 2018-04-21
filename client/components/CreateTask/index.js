@@ -8,11 +8,10 @@ import { isEmail, isRequired } from '../../utils/validators';
 
 import FilePicker from '../FilePicker';
 
-import { createTask, chooseViewTask } from '../../actions/TasksActions';
+import { createTask, setTaskToView } from '../../actions/TasksActions';
 import { changeImage } from '../../actions/ImageActions';
 
 import { USERNAME, EMAIL, IMAGE, TEXT } from '../../utils/constants';
-
 
 class CreateTask extends Component {
 
@@ -120,7 +119,7 @@ class CreateTask extends Component {
     }
 
     previewNewTask() {
-        this.props.chooseViewTask({
+        this.props.setTaskToView({
             ...this.props.newTaskForm,
             status: 0,
             image_path: this.props.newImage.path
@@ -137,7 +136,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     createTask: (task) => dispatch(createTask(task)),
-    chooseViewTask: (task) => dispatch(chooseViewTask(task)),
+    setTaskToView: (task) => dispatch(setTaskToView(task)),
     changeImage: (newImage) => dispatch(changeImage(newImage))
 });
 

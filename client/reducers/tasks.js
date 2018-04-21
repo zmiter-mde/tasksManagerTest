@@ -28,5 +28,4 @@ export const tasksReducer = (
         default:
             return state;
     }
-
 };

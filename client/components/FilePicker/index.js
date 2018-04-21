@@ -11,13 +11,13 @@ class FilePicker extends Component {
         super(props);
         this.state = {
             file: undefined,
-            path: '',
-            gotNewImage: false
+            path: ''
         };
     }
 
     componentDidMount() {
         const { newImage } = this.props;
+        // Otherwise file picker is reset on page reenter
         this.setState({file: newImage.file, path: newImage.path});
     }
 
@@ -33,7 +33,9 @@ class FilePicker extends Component {
 
                 <span className={classNames('glyphicon margined-left', {'glyphicon-ok': this.state.file})}>
                 </span>
-                <span className="margined-left">{this.state.file ? 'File ready' : 'Pick a file please'}</span>
+                <span className="margined-left">
+                    {this.state.file ? 'File ready' : 'Pick a file please'}
+                </span>
                 <input id="image"
                        name="image"
                        type="file"
@@ -57,8 +59,7 @@ class FilePicker extends Component {
         reader.onloadend = () => {
             this.setState({
                 file: file,
-                path: reader.result,
-                gotNewImage: false
+                path: reader.result
             });
             this.props.handleImageChange(file, reader.result);
         };

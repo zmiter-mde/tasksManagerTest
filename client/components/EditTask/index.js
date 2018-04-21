@@ -62,14 +62,13 @@ class EditTask extends Component {
                                 <span className={classNames('glyphicon margined-left',
                                     this.props.editTaskForm.status === 10 ? 'glyphicon-ok' : 'glyphicon-remove')}></span>
                                 <button className={classNames('btn btn-danger margined-left', {
-                                    'hidden': this.props.editTaskForm.status === 0 || !isAuthorised()
-                                })}
+                                        'hidden': this.props.editTaskForm.status === 0 || !isAuthorised()})}
                                         onClick={this.toggleCurrentTaskStatus.bind(this)}
                                         type="button">
                                     Resume Task
                                 </button>
                                 <button className={classNames('btn btn-success margined-left', {
-                                    'hidden': this.props.editTaskForm.status === 10 || !isAuthorised()})}
+                                        'hidden': this.props.editTaskForm.status === 10 || !isAuthorised()})}
                                         onClick={this.toggleCurrentTaskStatus.bind(this)}
                                         type="button">
                                     Finish Task

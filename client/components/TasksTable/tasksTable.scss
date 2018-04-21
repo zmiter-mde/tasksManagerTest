@@ -1,0 +1,14 @@
+.width30percent {
+  width: 30%;
+}
+
+.width10percent {
+  width: 10%;
+}
+
+.ellipsed {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}

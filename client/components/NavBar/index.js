@@ -19,12 +19,12 @@ class NavBar extends Component {
                             <li className={classNames({'active': this.isActivePath('/new')})}>
                                 <Link to="/new">Manage Task</Link>
                             </li>
-                            <li className={classNames({'active': this.isActivePath('/login'), 'hidden': this.isAuthorised()})}>
+                            <li className={classNames({'active': this.isActivePath('/login'), 'hidden': isAuthorised()})}>
                                 <Link to="/login">Login</Link>
                             </li>
-                            <li className={classNames({'hidden': !this.isAuthorised()})}>
+                            <li className={classNames({'hidden': !isAuthorised()})}>
                                 <Link to="/dashboard"
-                                      onClick={this.logout.bind(this)}>
+                                      onClick={() => {logout()}}>
                                     Logout
                                 </Link>
                             </li>
@@ -37,14 +37,6 @@ class NavBar extends Component {
 
     isActivePath(path) {
         return this.props.location.pathname === path;
-    }
-
-    isAuthorised() {
-        return isAuthorised();
-    }
-
-    logout() {
-        logout();
     }
 
 }

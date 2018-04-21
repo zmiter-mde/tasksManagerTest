@@ -3,7 +3,15 @@ import { actions } from 'react-redux-form';
 
 import { api } from '../utils/api';
 
-import { DEVELOPER_NAME_PARAM, SERVER_TOKEN, STATUS, SIGNATURE, SERVER_TOKEN_FIELD, TEXT } from '../utils/constants';
+import {
+    DEVELOPER_NAME_PARAM,
+    SERVER_TOKEN,
+    STATUS,
+    SIGNATURE,
+    SERVER_TOKEN_FIELD,
+    TEXT
+} from '../utils/constants';
+
 import { createSignature } from '../utils/auth';
 
 export const requestTasks = (page, sorting) => (
@@ -28,13 +36,13 @@ export const createTask = (task) => (
     }
 );
 
-export const chooseViewTask = (task) => (
+export const setTaskToView = (task) => (
     (dispatch) => {
         dispatch({ type: actionTypes.TASK_CHOSEN, currentTask: task});
     }
 );
 
-export const chooseEditTask = (task) => (
+export const setTaskForEdit = (task) => (
     (dispatch) => {
         dispatch(actions.change('editTaskForm', task));
     }
