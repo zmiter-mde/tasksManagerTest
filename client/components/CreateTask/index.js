@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Form, Control } from 'react-redux-form';
+import { Form, Control, Errors } from 'react-redux-form';
+import { toastr } from 'react-redux-toastr';
 
-import {toastr} from 'react-redux-toastr';
+import { isEmail, isRequired } from '../../utils/validators';
 
 import FilePicker from '../FilePicker';
 
-import { createTask, chooseTask } from '../../actions/TasksActions';
+import { createTask, chooseViewTask } from '../../actions/TasksActions';
 import { changeImage } from '../../actions/ImageActions';
 
 import { USERNAME, EMAIL, IMAGE, TEXT } from '../../utils/constants';
+
 
 class CreateTask extends Component {
 
@@ -22,32 +24,63 @@ class CreateTask extends Component {
                         <Form model="newTaskForm" onSubmit={(val) => this.createTask(val)}>
                             <div className="form-group">
                                 <label>Username</label>
+                                <Errors model=".username"
+                                        messages={{
+                                            isRequired: 'Please provide a username',
+                                        }}
+                                        className="errors"
+                                />
                                 <Control.text model=".username"
-                                              className="form-control"/>
-                            </div>
-
-                            <div className="form-group">
-                                <label>Text</label>
-                                <Control.textarea model=".text"
-                                                  className="form-control"/>
+                                              className="form-control"
+                                              validators={{
+                                                  isRequired: isRequired
+                                              }}/>
                             </div>
 
                             <div className="form-group">
                                 <label>Email</label>
+                                <Errors model=".email"
+                                        messages={{
+                                            isRequired: 'Please provide an email address',
+                                            isEmail: 'Not a valid email',
+                                        }}
+                                        className="errors"
+                                />
                                 <Control.text model=".email"
                                               type="email"
-                                              className="form-control"/>
+                                              className="form-control"
+                                              validators={{
+                                                  isRequired: isRequired,
+                                                  isEmail: isEmail
+                                              }}/>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Text</label>
+                                <Errors model=".text"
+                                        messages={{
+                                            isRequired: 'Please provide a text value',
+                                        }}
+                                        className="errors"
+                                />
+                                <Control.textarea model=".text"
+                                                  className="form-control"
+                                                  validators={{
+                                                      isRequired: isRequired
+                                                  }}/>
                             </div>
 
                             <FilePicker handleImageChange={this.handleFileChange.bind(this)}/>
 
                             <div className="form-group">
-                                <button type="submit"
-                                        className="btn btn-success right">
+                                <Control.button type="submit"
+                                                className="btn btn-success right margined-left"
+                                                model="newTaskForm"
+                                                disabled={(form) => !this.props.newImage.file || !form.valid }>
                                     Save
-                                </button>
+                                </Control.button>
                                 <button type="button"
-                                        className="btn btn-primary right"
+                                        className="btn btn-primary right margined-left"
                                         onClick={this.previewNewTask.bind(this)}>
                                     Preview
                                 </button>
@@ -82,7 +115,7 @@ class CreateTask extends Component {
     }
 
     previewNewTask() {
-        this.props.chooseTask({
+        this.props.chooseViewTask({
             ...this.props.newTaskForm,
             status: 0,
             image_path: this.props.newImage.path
@@ -99,7 +132,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     createTask: (task) => dispatch(createTask(task)),
-    chooseTask: (task) => dispatch(chooseTask(task)),
+    chooseViewTask: (task) => dispatch(chooseViewTask(task)),
     changeImage: (newImage) => dispatch(changeImage(newImage))
 });
 

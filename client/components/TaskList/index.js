@@ -5,7 +5,7 @@ import Pagination from 'react-js-pagination/dist/Pagination';
 
 import classNames from 'classnames';
 
-import { requestTasks, chooseTask } from '../../actions/TasksActions';
+import { requestTasks, chooseEditTask } from '../../actions/TasksActions';
 import { changeTasksPage, changeSortedBy, changeSortedAsc } from '../../actions/TaskSearchActions';
 
 import { EMAIL, STATUS, TASKS_PER_PAGE, USERNAME } from '../../utils/constants';
@@ -17,7 +17,7 @@ class TaskList extends Component {
     constructor(props) {
         super(props);
         // Because we care about the context for onClick
-        this.goViewTask = this.goViewTask.bind(this);
+        this.goEditTask = this.goEditTask.bind(this);
         this.getTaskRow = this.getTaskRow.bind(this);
         this.getTasksTable = this.getTasksTable.bind(this);
     }
@@ -135,7 +135,7 @@ class TaskList extends Component {
         return (
             <tr key={task.id}
                 className={styles.clickable}
-                onClick={() => {this.goViewTask(task)}}>
+                onClick={() => {this.goEditTask(task)}}>
                 <td>{task.username}</td>
                 <td>{task.email}</td>
                 <td><div className={styles.ellipsed}>{task.text}</div></td>
@@ -144,9 +144,16 @@ class TaskList extends Component {
         );
     }
 
-    goViewTask(task) {
-        this.props.chooseTask(task);
-        this.props.history.push(`/${task.id}`);
+    goEditTask(task) {
+        this.props.chooseEditTask({
+            id: task.id,
+            username: task.username,
+            path: task.image_path,
+            text: task.text,
+            status: task.status,
+            email: task.email
+        });
+        this.props.history.push(`/${task.id}/edit`);
     }
 
     getPagesCount() {
@@ -166,7 +173,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     requestTasks: (page, sorting) => dispatch(requestTasks(page, sorting)),
-    chooseTask: (task) => dispatch(chooseTask(task)),
+    chooseEditTask: (task) => dispatch(chooseEditTask(task)),
     changeTasksPage: (newPage) => dispatch(changeTasksPage(newPage)),
     changeSortedBy: (newSortedBy) => dispatch(changeSortedBy(newSortedBy)),
     changeSortedAsc: (newSortedAsc) => dispatch(changeSortedAsc(newSortedAsc))

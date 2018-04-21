@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 
 import classNames from 'classnames';
 
-import styles from './filePicker.scss';
-
 class FilePicker extends Component {
 
     filePicker = undefined;
@@ -29,19 +27,19 @@ class FilePicker extends Component {
                 <label htmlFor="image">Image</label>
                 <button type="button"
                         onClick={this.openFilePicker.bind(this)}
-                        className={classNames('btn btn-primary', styles.marginedLeft)}>
+                        className="btn btn-primary margined-left">
                     Pick a file
                 </button>
 
-                <span className={classNames(styles.marginedLeft, 'glyphicon', this.state.file ? 'glyphicon-ok' : '')}>
+                <span className={classNames('glyphicon margined-left', {'glyphicon-ok': this.state.file})}>
                 </span>
-                <span className={styles.marginedLeft}>{this.state.file ? 'File ready' : 'Pick a file please'}</span>
+                <span className="margined-left">{this.state.file ? 'File ready' : 'Pick a file please'}</span>
                 <input id="image"
                        name="image"
                        type="file"
                        onChange={this.handleImageChange.bind(this)}
                        ref={instance => { this.filePicker = instance; }}
-                       style={{display: 'none'}}
+                       className="hidden"
                        hidden />
 
             </div>

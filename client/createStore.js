@@ -1,20 +1,17 @@
 import { createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import { combineForms } from 'react-redux-form';
-import {reducer as toastrReducer} from 'react-redux-toastr'
+import { reducer as toastrReducer } from 'react-redux-toastr'
 
 import { tasksReducer } from './reducers/tasks';
 import { taskSearchReducer } from './reducers/taskSearch';
 import { imageReducer } from './reducers/image';
 
-const initialNewTaskFormState = {
-    text: 'text',
-    email: 'email@gmail.com',
-    username: 'username'
-};
+import { initialTaskFormState } from './utils/initialState';
 
 const rootReducer = combineForms({
-    newTaskForm: initialNewTaskFormState,
+    newTaskForm: initialTaskFormState,
+    editTaskForm: initialTaskFormState,
     tasksReducer: tasksReducer,
     taskSearchReducer: taskSearchReducer,
     imageReducer: imageReducer,

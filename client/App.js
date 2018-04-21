@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import TaskList from './components/TaskList';
 import CreateTask from './components/CreateTask';
 import ViewTask from './components/ViewTask';
+import EditTask from './components/EditTask';
 
 class App extends Component {
 
@@ -19,7 +20,7 @@ class App extends Component {
                     <Route exact path={'/new'} component={CreateTask} />
                     <Route exact path={'/:id'} component={ViewTask} />
                     <Route exact path={'/preview'} component={ViewTask} />
-                    <Route exact path={'/:id/edit'} component={ViewTask} />
+                    <Route exact path={'/:id/edit'} component={EditTask} />
                 </Switch>
                 <ReduxToastr
                     timeOut={4000}
