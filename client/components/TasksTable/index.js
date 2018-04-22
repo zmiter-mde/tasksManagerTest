@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import { EMAIL, STATUS, USERNAME } from '../../utils/constants';
 
-import { requestTasks, setTaskForEdit } from '../../actions/TasksActions';
+import { requestTasks, setTaskToEdit } from '../../actions/TasksActions';
 import { changeSortedBy, changeSortedAsc } from '../../actions/TaskSearchActions';
 
 import { getSortingObject } from '../../utils/sort';
@@ -84,7 +84,7 @@ class TasksTable extends Component {
     }
 
     goEditTask(task) {
-        this.props.setTaskForEdit({
+        this.props.setTaskToEdit({
             id: task.id,
             username: task.username,
             path: task.image_path,
@@ -112,7 +112,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setTaskForEdit: (task) => dispatch(setTaskForEdit(task)),
+    setTaskToEdit: (task) => dispatch(setTaskToEdit(task)),
     requestTasks: (page, sorting) => dispatch(requestTasks(page, sorting)),
     changeSortedBy: (newSortedBy) => dispatch(changeSortedBy(newSortedBy)),
     changeSortedAsc: (newSortedAsc) => dispatch(changeSortedAsc(newSortedAsc))

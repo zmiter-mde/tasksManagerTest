@@ -5,7 +5,7 @@ import Pagination from 'react-js-pagination/dist/Pagination';
 
 import classNames from 'classnames';
 
-import { setTaskForEdit, requestTasks } from '../../actions/TasksActions';
+import { requestTasks } from '../../actions/TasksActions';
 import { changeTasksPage } from '../../actions/TaskSearchActions';
 import { getSortingObject } from '../../utils/sort';
 
@@ -81,7 +81,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     requestTasks: (page, sorting) => dispatch(requestTasks(page, sorting)),
-    setTaskForEdit: (task) => dispatch(setTaskForEdit(task)),
     changeTasksPage: (newPage) => dispatch(changeTasksPage(newPage))
 });
 

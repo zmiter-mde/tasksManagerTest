@@ -42,9 +42,15 @@ export const setTaskToView = (task) => (
     }
 );
 
-export const setTaskForEdit = (task) => (
+export const setTaskToEdit = (task) => (
     (dispatch) => {
         dispatch(actions.change('editTaskForm', task));
+    }
+);
+
+export const setTaskToCreate = (task) => (
+    (dispatch) => {
+        dispatch(actions.change('newTaskForm', task));
     }
 );
 

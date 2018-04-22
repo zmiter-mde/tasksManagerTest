@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import classNames from 'classnames';
 
@@ -16,12 +15,6 @@ class FilePicker extends Component {
             path: undefined,
             typeAccepted: false
         };
-    }
-
-    componentDidMount() {
-        const { newImage } = this.props;
-        // Otherwise file picker is reset on page reenter
-        this.setState({file: newImage.file});
     }
 
     render() {
@@ -137,13 +130,10 @@ class FilePicker extends Component {
             height: height
         };
     }
+
+    setImage(image) {
+        this.setState({file: image.file, path: image.path, typeAccepted: image.typeAccepted});
+    }
 }
 
-const mapStateToProps = state => ({
-    newImage: state.imageReducer.newImage
-});
-
-const mapDispatchToProps = dispatch => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilePicker);
+export default FilePicker;

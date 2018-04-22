@@ -8,12 +8,19 @@ import { isEmail, isRequired } from '../../utils/validators';
 
 import FilePicker from '../FilePicker';
 
-import { createTask, setTaskToView } from '../../actions/TasksActions';
+import { createTask, setTaskToView, setTaskToCreate } from '../../actions/TasksActions';
 import { changeImage } from '../../actions/ImageActions';
 
 import { USERNAME, EMAIL, IMAGE, TEXT } from '../../utils/constants';
+import { initialTaskFormState } from '../../utils/formInitialStates';
 
 class CreateTask extends Component {
+
+    filePicker = undefined;
+
+    componentDidMount() {
+        this.filePicker.setImage(this.props.newImage);
+    }
 
     render() {
         return (
@@ -74,7 +81,8 @@ class CreateTask extends Component {
                                                   }}/>
                             </div>
 
-                            <FilePicker handleImageChange={this.handleFileChange.bind(this)}/>
+                            <FilePicker handleImageChange={this.handleFileChange.bind(this)}
+                                        ref={instance => { this.filePicker = instance; }}/>
 
                             <div className="form-group">
                                 <Control.button type="submit"
@@ -116,6 +124,9 @@ class CreateTask extends Component {
             toastr.error('Error', 'Task wasn\'t created');
         } else {
             toastr.success('Success', 'Task created!');
+            this.props.setTaskToCreate(initialTaskFormState);
+            this.props.changeImage({});
+            this.filePicker.setImage({});
         }
 
     }
@@ -139,6 +150,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     createTask: (task) => dispatch(createTask(task)),
     setTaskToView: (task) => dispatch(setTaskToView(task)),
+    setTaskToCreate: (task) => dispatch(setTaskToCreate(task)),
     changeImage: (newImage) => dispatch(changeImage(newImage))
 });
 
