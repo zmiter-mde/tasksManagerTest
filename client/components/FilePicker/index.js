@@ -108,10 +108,12 @@ class FilePicker extends Component {
 
         canvas.width = newSize.width;
         canvas.height = newSize.height;
-        canvas.getContext("2d");
+
         ctx.drawImage(image, 0, 0, newSize.width, newSize.height);
 
-        return canvas.toDataURL(this.state.type);
+        let result = canvas.toDataURL(this.state.type);;
+        canvas.remove();
+        return result;
     }
 
     getNewSize(image) {
