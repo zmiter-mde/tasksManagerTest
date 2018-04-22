@@ -26,7 +26,6 @@ class App extends Component {
                 <ReduxToastr
                     timeOut={4000}
                     newestOnTop={false}
-                    preventDuplicates
                     position="bottom-right"
                     transitionIn="fadeIn"
                     transitionOut="fadeOut"
